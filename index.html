@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Store</title>
+<style>
+body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  background:#f4f4f4;
+}
+
+header{
+  background:#222;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+.container{
+  display:flex;
+  flex-wrap:wrap;
+}
+
+.products{
+  flex:3;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+.product{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+}
+
+.cart{
+  flex:1;
+  min-width:250px;
+  background:white;
+  padding:20px;
+}
+
+button{
+  background:#0078d7;
+  color:white;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+}
+
+.price{
+  color:green;
+  font-size:20px;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>My Online Store</h1>
+</header>
+
+<div class="container">
+
+<div class="products" id="products"></div>
+
+<div class="cart">
+<h2>Cart</h2>
+<div id="cart"></div>
+<h3>Total: £<span id="total">0.00</span></h3>
+</div>
+
+</div>
+
+<script>
+
+// EDIT PRODUCTS HERE
+
+const products = [
+{
+id:1,
+name:"Product 1",
+price:9.99,
+description:"Description here"
+},
+{
+id:2,
+name:"Product 2",
+price:14.99,
+description:"Description here"
+},
+{
+id:3,
+name:"Product 3",
+price:19.99,
+description:"Description here"
+}
+];
+
+// STORE LOGIC
+
+let cart = [];
+
+const productDiv =
+document.getElementById("products");
+
+products.forEach(product => {
+
+productDiv.innerHTML += `
+<div class="product">
+<h2>${product.name}</h2>
+<p>${product.description}</p>
+<p class="price">£${product.price}</p>
+<button onclick="addToCart(${product.id})">
+Add To Cart
+</button>
+</div>
+`;
+
+});
+
+function addToCart(id){
+
+const product =
+products.find(p=>p.id===id);
+
+cart.push(product);
+
+updateCart();
+
+}
+
+function updateCart(){
+
+let total = 0;
+
+const cartDiv =
+document.getElementById("cart");
+
+cartDiv.innerHTML = "";
+
+cart.forEach(item=>{
+
+total += item.price;
+
+cartDiv.innerHTML += `
+<p>${item.name} - £${item.price}</p>
+`;
+
+});
+
+document.getElementById("total")
+.textContent =
+total.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
+
